@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>valentine's day</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: #fff0f3;
+            color: #ff6b81;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        button {
+            padding: 12px 25px;
+            font-size: 1em;
+            margin: 10px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        #yesButton {
+            background-color: #ff6b81;
+            color: white;
+        }
+        #noButton {
+            background-color: #ffffff;
+            color: #ff6b81;
+            border: 2px solid #ff6b81;
+        }
+        #noButton:hover {
+            background-color: #ffe3e6;
+        }
+        .hidden {
+            display: none;
+        }
+        .gif-container {
+            margin-top: 20px;
+        }
+        .gif-container img {
+            width: 250px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .message {
+            font-size: 1.1em;
+            color: #ff6b81;
+            margin-top: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div id="question1">
+        <h1>do you love me?</h1>
+        <button id="yesButton1" onclick="handleYes(1)">yes</button>
+        <button id="noButton1" onclick="handleNo(1)">no</button>
+        <div class="gif-container">
+            <img id="gif1" src="https://i.imgur.com/G5SERpx.gif" alt="default gif">
+        </div>
+    </div>
+
+    <div id="question2" class="hidden">
+        <h1>do you want to be with me forever?</h1>
+        <button id="yesButton2" onclick="handleYes(2)">yes</button>
+        <button id="noButton2" onclick="handleNo(2)">no</button>
+        <div class="gif-container">
+            <img id="gif2" src="https://i.imgur.com/G5SERpx.gif" alt="default gif">
+        </div>
+    </div>
+
+    <div id="question3" class="hidden">
+        <h1>will you be my valentine?</h1>
+        <button id="yesButton3" onclick="valentinesResponse()">yes</button>
+        <button id="noButton3" onclick="handleNo(3)">no</button>
+        <div class="gif-container">
+            <img id="gif3" src="https://i.imgur.com/G5SERpx.gif" alt="default gif">
+        </div>
+    </div>
+
+    <script>
+        let noClicks = 0;
+
+        function handleYes(questionNumber) {
+            if (questionNumber === 1) {
+                document.getElementById('question1').classList.add('hidden');
+                document.getElementById('question2').classList.remove('hidden');
+            } else if (questionNumber === 2) {
+                document.getElementById('question2').classList.add('hidden');
+                document.getElementById('question3').classList.remove('hidden');
+            }
+        }
+
+        function handleNo(questionNumber) {
+            noClicks++;
+            const yesButton = document.getElementById(`yesButton${questionNumber}`);
+            const noButton = document.getElementById(`noButton${questionNumber}`);
+            const gif = document.getElementById(`gif${questionNumber}`);
+
+            // change gif to "no" response gif
+            gif.src = "https://i.imgur.com/4sR8Xgh.gif";
+
+            // increase size of yes button
+            yesButton.style.fontSize = `${1 + noClicks * 0.5}em`;
+            yesButton.style.padding = `${12 + noClicks * 5}px ${25 + noClicks * 10}px`;
+
+            // shrink no button
+            noButton.style.fontSize = `${1 - noClicks * 0.1}em`;
+            noButton.style.padding = `${12 - noClicks * 2}px ${25 - noClicks * 4}px`;
+
+            // hide no button if it gets too small
+            if (noClicks >= 5) {
+                noButton.style.display = 'none';
+            }
+        }
+
+        function valentinesResponse() {
+            // hide the buttons and question
+            document.getElementById('question3').style.display = 'none';
+
+            // display the message
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            messageDiv.textContent = "yayyy i love you bootsie. i'm sorry i took so long!";
+            document.body.appendChild(messageDiv);
+
+            // create a new gif container below the message
+            const gifContainer = document.createElement('div');
+            gifContainer.className = 'gif-container';
+            gifContainer.innerHTML = `<img src="https://i.imgur.com/KtYK2Mx.gif" alt="love gif" style="width: 300px;">`;
+            document.body.appendChild(gifContainer);
+
+            // show a message after animation
+            setTimeout(() => {
+                alert("💕 happy valentine's day! 🥰");
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
